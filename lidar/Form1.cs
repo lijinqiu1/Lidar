@@ -248,6 +248,7 @@ namespace lidar
             else
             {
                 label_point1.ForeColor = System.Drawing.Color.Black;
+                SendKeys.SendWait("{4}");
             }
 
             if (point2 == 1)
@@ -258,6 +259,7 @@ namespace lidar
             else
             {
                 label_point2.ForeColor = System.Drawing.Color.Black;
+                SendKeys.SendWait("{5}");
             }
 
             if (point3 == 1)
@@ -268,6 +270,7 @@ namespace lidar
             else
             {
                 label_point3.ForeColor = System.Drawing.Color.Black;
+                SendKeys.SendWait("{6}");
             }
 
         }
