@@ -35,6 +35,7 @@ namespace lidar
         float detdistance1= 0.0f;
         float detdistance2 = 0.0f;
         float detdistance3 = 0.0f;
+        int start_flag = 0;
 
         public Form1()
         {
@@ -240,37 +241,40 @@ namespace lidar
                 }
             }
 
-            if (point1 == 1)
+            if (start_flag == 1)
             {
-                label_point1.ForeColor = System.Drawing.Color.Red;
-                SendKeys.SendWait("{1}");
-            } 
-            else
-            {
-                label_point1.ForeColor = System.Drawing.Color.Black;
-                SendKeys.SendWait("{4}");
-            }
+                if (point1 == 1)
+                {
+                    label_point1.ForeColor = System.Drawing.Color.Red;
+                    SendKeys.SendWait("{1}");
+                }
+                else
+                {
+                    label_point1.ForeColor = System.Drawing.Color.Black;
+                    SendKeys.SendWait("{4}");
+                }
 
-            if (point2 == 1)
-            {
-                label_point2.ForeColor = System.Drawing.Color.Red;
-                SendKeys.SendWait("{2}");
-            }
-            else
-            {
-                label_point2.ForeColor = System.Drawing.Color.Black;
-                SendKeys.SendWait("{5}");
-            }
+                if (point2 == 1)
+                {
+                    label_point2.ForeColor = System.Drawing.Color.Red;
+                    SendKeys.SendWait("{2}");
+                }
+                else
+                {
+                    label_point2.ForeColor = System.Drawing.Color.Black;
+                    SendKeys.SendWait("{5}");
+                }
 
-            if (point3 == 1)
-            {
-                label_point3.ForeColor = System.Drawing.Color.Red;
-                SendKeys.SendWait("{3}");
-            }
-            else
-            {
-                label_point3.ForeColor = System.Drawing.Color.Black;
-                SendKeys.SendWait("{6}");
+                if (point3 == 1)
+                {
+                    label_point3.ForeColor = System.Drawing.Color.Red;
+                    SendKeys.SendWait("{3}");
+                }
+                else
+                {
+                    label_point3.ForeColor = System.Drawing.Color.Black;
+                    SendKeys.SendWait("{6}");
+                }
             }
 
         }
@@ -444,6 +448,20 @@ namespace lidar
             float.TryParse(textBox_distance2.Text, out detdistance2);
             IniFiles.WriteIniData("Lidar", "侦测距离3", textBox_distance3.Text, iniFilePath);
             float.TryParse(textBox_distance3.Text, out detdistance3);
+        }
+
+        private void Start_button_Click(object sender, EventArgs e)
+        {
+            if (Start_button.Text == "开始")
+            {
+                start_flag = 1;
+                Start_button.Text = "停止";
+            } 
+            else
+            {
+                start_flag = 0;
+                Start_button.Text = "开始";
+            }
         }
     }
     public class IniFiles

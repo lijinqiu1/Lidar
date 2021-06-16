@@ -45,6 +45,7 @@
             this.textBox_distance3 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox_distance2 = new System.Windows.Forms.TextBox();
+            this.Start_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // workstatus
@@ -195,11 +196,22 @@
             this.textBox_distance2.Size = new System.Drawing.Size(100, 21);
             this.textBox_distance2.TabIndex = 6;
             // 
+            // Start_button
+            // 
+            this.Start_button.Location = new System.Drawing.Point(352, 104);
+            this.Start_button.Name = "Start_button";
+            this.Start_button.Size = new System.Drawing.Size(75, 23);
+            this.Start_button.TabIndex = 9;
+            this.Start_button.Text = "开始";
+            this.Start_button.UseVisualStyleBackColor = true;
+            this.Start_button.Click += new System.EventHandler(this.Start_button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(532, 225);
+            this.Controls.Add(this.Start_button);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label_point3);
             this.Controls.Add(this.label_point2);
@@ -243,6 +255,7 @@
         private System.Windows.Forms.TextBox textBox_distance3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox_distance2;
+        private System.Windows.Forms.Button Start_button;
     }
 }
 
