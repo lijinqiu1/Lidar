@@ -35,7 +35,7 @@ namespace lidar
         float detdistance1= 0.0f;
         float detdistance2 = 0.0f;
         float detdistance3 = 0.0f;
-        int start_flag = 0;
+        int start_flag = 1;
 
         public Form1()
         {
@@ -102,17 +102,23 @@ namespace lidar
         {
             int startindex = (int)(startangle * 100.0f) / 2250 * 36;
             int stopindex = (int)(stopangle * 100.0f) / 2250 * 36;
+            int tmp1 = 96, tmp2 = 96, tmp3 = 96; //180°三等分
             int tmp = (stopindex - startindex) / 3;
             int i = 0;
             int point1 = 0, point2 = 0, point3 = 0;
 
+
             if (startindex < stopindex)
             {
                 tmp = (stopindex - startindex) / 3;
+
+                tmp1 = (stopindex - startindex) - 96 - 96;
             }
             else
             {
                 tmp = (576 + stopindex - startindex) / 3;
+
+                tmp1 = (576 + stopindex - startindex) - 96 - 96;
             }
             
             label_lidarstatus.Text = "雷达转速:" + RotateSpeed + "R/s";
@@ -120,37 +126,37 @@ namespace lidar
             //侦测计算 顺时针方向
             if (startindex < stopindex)
             {
-                for (i = startindex; i < startindex + tmp; i++)
+                for (i = startindex; i < startindex + tmp1; i++)
                 {
-                    if (distance[i] < detdistance1)
+                    if (distance[i] < detdistance1 && distance[i] > 100)
                     {
                         point1 = 1;
                         break;
                     }
                 }
 
-                if (i == startindex + tmp)
+                if (i == startindex + tmp1)
                 {
                     point1 = 0;
                 }
 
-                for (i = startindex + tmp; i < startindex + tmp + tmp; i++)
+                for (i = startindex + tmp1; i < startindex + tmp1 + tmp2; i++)
                 {
-                    if (distance[i] < detdistance2)
+                    if (distance[i] < detdistance2 && distance[i] > 100)
                     {
                         point2 = 1;
                         break;
                     }
                 }
 
-                if (i == startindex + tmp + tmp)
+                if (i == startindex + tmp1 + tmp2)
                 {
                     point2 = 0;
                 }
 
-                for (i = startindex + tmp + tmp; i < stopindex; i++)
+                for (i = startindex + tmp1 + tmp2; i < stopindex; i++)
                 {
-                    if (distance[i] < detdistance3)
+                    if (distance[i] < detdistance3 && distance[i] > 100)
                     {
                         point3 = 1;
                         break;
@@ -165,11 +171,11 @@ namespace lidar
             else
             {
                 //第一段
-                for (i = startindex; i < startindex + tmp; i++)
+                for (i = startindex; i < startindex + tmp1; i++)
                 {
                     if (i < distance.Length)
                     {
-                        if (distance[i] < detdistance1 && distance[i] != 0)
+                        if (distance[i] < detdistance1 && distance[i] > 100)
                         {
                             point1 = 1;
                             break;
@@ -177,7 +183,7 @@ namespace lidar
                     }
                     else
                     {
-                        if (distance[i - distance.Length] < detdistance1 && distance[i - distance.Length] !=0)
+                        if (distance[i - distance.Length] < detdistance1 && distance[i - distance.Length] > 100)
                         {
                             point1 = 1;
                             break;
@@ -185,16 +191,16 @@ namespace lidar
                     }
                 }
 
-                if (i == startindex + tmp)
+                if (i == startindex + tmp1)
                 {
                     point1 = 0;
                 }
 
-                for (i = startindex + tmp; i < startindex + tmp + tmp; i++)
+                for (i = startindex + tmp1; i < startindex + tmp1 + tmp2; i++)
                 {
                     if (i < distance.Length)
                     {
-                        if (distance[i] < detdistance2 && distance[i] != 0)
+                        if (distance[i] < detdistance2 && distance[i] > 100)
                         {
                             point2 = 1;
                             break;
@@ -202,7 +208,7 @@ namespace lidar
                     }
                     else
                     {
-                        if (distance[i - distance.Length] < detdistance2 && distance[i - distance.Length] != 0)
+                        if (distance[i - distance.Length] < detdistance2 && distance[i - distance.Length] > 100)
                         {
                             point2 = 1;
                             break;
@@ -210,16 +216,16 @@ namespace lidar
                     }
                 }
 
-                if (i == startindex + tmp + tmp)
+                if (i == startindex + tmp1 + tmp2)
                 {
                     point2 = 0;
                 }
 
-                for (i = startindex + tmp + tmp; i < startindex + tmp + tmp + tmp; i++)
+                for (i = startindex + tmp1 + tmp2; i < startindex + tmp1 + tmp2 + tmp3; i++)
                 {
                     if (i < distance.Length)
                     {
-                        if (distance[i] < detdistance3 && distance[i] != 0)
+                        if (distance[i] < detdistance3 && distance[i] > 100)
                         {
                             point3 = 1;
                             break;
@@ -227,7 +233,7 @@ namespace lidar
                     }
                     else
                     {
-                        if (distance[i - distance.Length] < detdistance3 && distance[i - distance.Length] != 0)
+                        if (distance[i - distance.Length] < detdistance3 && distance[i - distance.Length] > 100)
                         {
                             point3 = 1;
                             break;
@@ -235,7 +241,7 @@ namespace lidar
                     }
                 }
 
-                if (i == startindex + tmp + tmp + tmp)
+                if (i == startindex + tmp1 + tmp2 + tmp3)
                 {
                     point3 = 0;
                 }
@@ -245,35 +251,35 @@ namespace lidar
             {
                 if (point1 == 1)
                 {
+                    label_point3.ForeColor = System.Drawing.Color.Red;
+                    SendKeys.SendWait("{5}");
+                }
+                else
+                {
+                    label_point3.ForeColor = System.Drawing.Color.Black;
+                    SendKeys.SendWait("{6}");
+                }
+
+                if (point2 == 1)
+                {
+                    label_point2.ForeColor = System.Drawing.Color.Red;
+                    SendKeys.SendWait("{3}");
+                }
+                else
+                {
+                    label_point2.ForeColor = System.Drawing.Color.Black;
+                    SendKeys.SendWait("{4}");
+                }
+
+                if (point3 == 1)
+                {
                     label_point1.ForeColor = System.Drawing.Color.Red;
                     SendKeys.SendWait("{1}");
                 }
                 else
                 {
                     label_point1.ForeColor = System.Drawing.Color.Black;
-                    SendKeys.SendWait("{4}");
-                }
-
-                if (point2 == 1)
-                {
-                    label_point2.ForeColor = System.Drawing.Color.Red;
                     SendKeys.SendWait("{2}");
-                }
-                else
-                {
-                    label_point2.ForeColor = System.Drawing.Color.Black;
-                    SendKeys.SendWait("{5}");
-                }
-
-                if (point3 == 1)
-                {
-                    label_point3.ForeColor = System.Drawing.Color.Red;
-                    SendKeys.SendWait("{3}");
-                }
-                else
-                {
-                    label_point3.ForeColor = System.Drawing.Color.Black;
-                    SendKeys.SendWait("{6}");
                 }
             }
 

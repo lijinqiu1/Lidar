@@ -202,7 +202,7 @@
             this.Start_button.Name = "Start_button";
             this.Start_button.Size = new System.Drawing.Size(75, 23);
             this.Start_button.TabIndex = 9;
-            this.Start_button.Text = "开始";
+            this.Start_button.Text = "停止";
             this.Start_button.UseVisualStyleBackColor = true;
             this.Start_button.Click += new System.EventHandler(this.Start_button_Click);
             // 
